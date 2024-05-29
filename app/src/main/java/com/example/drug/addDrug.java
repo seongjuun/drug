@@ -7,8 +7,10 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.KeyEvent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -61,13 +63,25 @@ public class addDrug extends AppCompatActivity { //약물 추가 액티비티
         drugName = findViewById(R.id.drugName); //약물 이름
         handler = new Handler();    //핸들러
 
-        drugName.setOnKeyListener((v, keyCode, event) -> {  //약물 이름 입력시
-            if (keyCode == KeyEvent.KEYCODE_ENTER ) {    //엔터키일 경우
+        drugName.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_NEXT) {
                 Intent intent = new Intent(v.getContext(), SaveDrug.class); //저장된 약물 액티비티로 이동
                 intent.putExtra("drugName", drugName.getText().toString()); //약물 이름 전달
                 v.getContext().startActivity(intent);
                 return true;
-            }else{
+            }
+            return false;
+        });
+
+        drugName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // 텍스트 변경 전
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // 텍스트 변경 중
                 if (runnable != null) {
                     handler.removeCallbacks(runnable);
                 }
@@ -82,17 +96,21 @@ public class addDrug extends AppCompatActivity { //약물 추가 액티비티
                     }).start();
                 };
                 handler.postDelayed(runnable, 1000);   //1초 뒤 실행
-                return true;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // 텍스트 변경 후
             }
         });
 
-        clear = findViewById(R.id.clear);   //지우기 버튼
-        clear.setOnClickListener(v -> {  //지우기 버튼 클릭시
-            drugName.setText("");
-            if (runnable != null) {
-                handler.removeCallbacks(runnable);
-            }
-        });
+//        clear = findViewById(R.id.clear);   //지우기 버튼
+//        clear.setOnClickListener(v -> {  //지우기 버튼 클릭시
+//            drugName.setText("");
+//            if (runnable != null) {
+//                handler.removeCallbacks(runnable);
+//            }
+//        });
 
         recyclerView.addItemDecoration(new DividerItemDecoration(this));    //리사이클러뷰 아이템 구분선 추가
     }

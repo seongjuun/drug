@@ -6,57 +6,72 @@
     android:layout_height="match_parent"
     tools:context=".drug">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="@color/blue"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/profile_image"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:src="@drawable/guest" />
+        <LinearLayout
+            android:id="@+id/linearLayout5"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:background="@color/blue"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:src="@drawable/guest" />
+
+            <TextView
+                android:id="@+id/profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:gravity="center|start"
+                android:text="@string/게스트"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/search_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_weight="0"
+                android:src="@drawable/search" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/profile_name"
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:textSize="20sp"
-            android:layout_weight="1"
-            android:gravity="center|start"
-            android:text="@string/게스트"
-            android:textColor="@color/white" />
+            android:id="@+id/active_drug"
+            android:layout_width="100dp"
+            android:layout_height="23dp"
+            android:layout_gravity="start"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/복용_중인_약"
+            android:textColor="#8A8888"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
-        <ImageView
-            android:id="@+id/search_image"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_weight="0"
-            android:src="@drawable/search" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/active_drug"
-        android:layout_width="100dp"
-        android:layout_height="23dp"
-        android:layout_gravity="start"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="70dp"
-        android:text="@string/복용_중인_약"
-        android:textColor="#8A8888"
-        android:textSize="16sp" />
-
-    <Button
-        android:id="@+id/add_drug"
-        android:layout_width="207dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="720dp"
-        android:text="@string/약물_추가" />
+        <Button
+            android:id="@+id/add_drug"
+            android:layout_width="207dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="68dp"
+            android:backgroundTint="@color/blue"
+            android:gravity="center_horizontal"
+            android:text="@string/약물_추가"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </FrameLayout>
