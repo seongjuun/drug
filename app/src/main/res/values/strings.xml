@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">drug</string>
+    <string name="게스트">게스트</string>
+    <string name="todo">TODO</string>
+    <string name="일">일</string>
+    <string name="월">월</string>
+    <string name="화">화</string>
+    <string name="수">수</string>
+    <string name="목">목</string>
+    <string name="토">토</string>
+    <string name="금">금</string>
+    <string name="약물_추가">약물 추가</string>
+    <string name="홈">홈</string>
+    <string name="약물">약물</string>
+    <string name="내_정보">내 정보</string>
+    <string name="더보기">더 보기</string>
+    <string name="_6_8">오늘, 6월 8일</string>
+    <string name="_6">6</string>
+    <string name="_7">7</string>
+    <string name="_8">8</string>
+    <string name="_3">3</string>
+    <string name="_4">4</string>
+    <string name="_2">2</string>
+    <string name="_5">5</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="복용_중인_약">복용 중인 약</string>
+    <string name="어떤_약물을_추가">어떤 약물을 추가하시겠습니까?</string>
+</resources>

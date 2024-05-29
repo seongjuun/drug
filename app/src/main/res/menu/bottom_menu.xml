@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/home"
+        android:title="홈" />
+    <item
+        android:id="@+id/drug"
+        android:icon="@drawable/drug"
+        android:title="약물" />
+    <item
+        android:id="@+id/info"
+        android:icon="@drawable/info"
+        android:title="내 정보" />
+    <item
+        android:id="@+id/more"
+        android:icon="@drawable/more"
+        android:title="더보기" />
+</menu>
