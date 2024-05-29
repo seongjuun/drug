@@ -2,6 +2,7 @@ package com.example.drug;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -30,72 +31,74 @@ import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-public class addDrug extends AppCompatActivity {
+public class addDrug extends AppCompatActivity { //약물 추가 액티비티
 
-    EditText drugName;
-    ImageView clear;
-    RecyclerView recyclerView;
-    DrugAdapter adapter;
-    ArrayList<String> drugList;
-    String drugItems;
-    Handler handler;
-    Runnable runnable;
+    EditText drugName; //약물 이름
+    ImageView clear;    //지우기 버튼
+    RecyclerView recyclerView;  //리사이클러뷰
+    DrugAdapter adapter;    //어댑터
+    ArrayList<String> drugList; //약물 리스트
+    String drugItems;   //약물 아이템
+    Handler handler;    //핸들러
+    Runnable runnable;  //실행 가능한 클래스
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {    //액티비티 시작시
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_drug);
         ImageView close = findViewById(R.id.back);
         close.setOnClickListener(v -> finish());
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        drugList = new ArrayList<>();
-        adapter = new DrugAdapter(drugList);
-        recyclerView.setAdapter(adapter);
+        recyclerView = findViewById(R.id.recyclerView); //리사이클러뷰
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));   //리사이클러뷰 레이아웃 설정
 
-        drugName = findViewById(R.id.drugName);
-        handler = new Handler();
+        drugList = new ArrayList<>();   //약물 리스트
+        adapter = new DrugAdapter(drugList);    //어댑터
+        recyclerView.setAdapter(adapter);   //리사이클러뷰에 어댑터 설정
 
-        drugName.setOnKeyListener((v, keyCode, event) -> {
-            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+        drugName = findViewById(R.id.drugName); //약물 이름
+        handler = new Handler();    //핸들러
 
+        drugName.setOnKeyListener((v, keyCode, event) -> {  //약물 이름 입력시
+            if (keyCode == KeyEvent.KEYCODE_ENTER ) {    //엔터키일 경우
+                Intent intent = new Intent(v.getContext(), SaveDrug.class); //저장된 약물 액티비티로 이동
+                intent.putExtra("drugName", drugName.getText().toString()); //약물 이름 전달
+                v.getContext().startActivity(intent);
                 return true;
             }else{
                 if (runnable != null) {
                     handler.removeCallbacks(runnable);
                 }
                 runnable = () -> {
-                    new Thread(() -> {
+                    new Thread(() -> {  //스레드
                         try {
-                            drugItems = ApiClient.ApiExplorer(drugName.getText().toString());
-                            runOnUiThread(() -> xmlParsing(drugItems));
+                            drugItems = ApiClient.ApiExplorer(drugName.getText().toString());   //오픈 api 호출
+                            runOnUiThread(() -> xmlParsing(drugItems));   //xml 파싱
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
                     }).start();
                 };
-                handler.postDelayed(runnable, 1000); // 1-second delay
+                handler.postDelayed(runnable, 1000);   //1초 뒤 실행
                 return true;
             }
         });
 
-
-        clear = findViewById(R.id.clear);
-        clear.setOnClickListener(v -> {
+        clear = findViewById(R.id.clear);   //지우기 버튼
+        clear.setOnClickListener(v -> {  //지우기 버튼 클릭시
             drugName.setText("");
             if (runnable != null) {
                 handler.removeCallbacks(runnable);
             }
         });
 
-        recyclerView.addItemDecoration(new DividerItemDecoration(this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this));    //리사이클러뷰 아이템 구분선 추가
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    protected void xmlParsing(String xml) {
+    protected void xmlParsing(String xml) {   //xml 파싱
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
@@ -104,26 +107,27 @@ public class addDrug extends AppCompatActivity {
 
             NodeList nodeList = doc.getElementsByTagName("item");
             drugList.clear();
-            for (int i = 0; i < nodeList.getLength(); i++) {
+            for (int i = 0; i < nodeList.getLength(); i++) {    //노드 리스트 길이만큼 반복
                 Node node = nodeList.item(i);
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
                     Element element = (Element) node;
-                    NodeList name = element.getElementsByTagName("itemName");
+                    NodeList name = element.getElementsByTagName("itemName");   //제품명
                     if (name.getLength() > 0) {
                         String itemName = name.item(0).getTextContent();
-                        drugList.add(itemName);
+                        drugList.add(itemName); //약물 리스트에 추가
                     }
                 }
             }
-            recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
+            recyclerView.setAdapter(adapter);   //리사이클러뷰에 어댑터 설정
+            adapter.notifyDataSetChanged(); //어댑터 갱신
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 }
 
-class DividerItemDecoration extends RecyclerView.ItemDecoration {
+class DividerItemDecoration extends RecyclerView.ItemDecoration {   //리사이클러뷰 아이템 구분선
     private final Drawable divider;
 
     public DividerItemDecoration(Context context) {

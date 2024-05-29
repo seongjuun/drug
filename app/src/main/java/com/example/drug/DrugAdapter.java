@@ -1,5 +1,6 @@
 package com.example.drug;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,12 @@ public class DrugAdapter extends RecyclerView.Adapter<DrugAdapter.DrugViewHolder
     public void onBindViewHolder(@NonNull DrugViewHolder holder, int position) {
         String drugName = drugList.get(position);
         holder.drugNameTextView.setText(drugName);
+        holder.itemView.setOnClickListener(v -> { //아이템 클릭시
+            Intent intent = new Intent(v.getContext(), SaveDrug.class); //저장된 약물 액티비티로 이동
+            intent.putExtra("drugName", drugName); //약물 이름 전달
+            v.getContext().startActivity(intent);
+            System.out.println(drugName);
+        });
     }
 
     @Override
