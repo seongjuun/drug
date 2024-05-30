@@ -45,11 +45,17 @@ public class SaveDrug extends AppCompatActivity {
             drugNameTextView.setText("약물 이름 없음");
         }
         Button save = findViewById(R.id.saveButton); // 저장 버튼
-        save.setOnClickListener(v -> finish());
+        save.setOnClickListener(v -> {
+            Intent saveIntent = new Intent(this, MainActivity.class);
+            finishActivity(0);
+            startActivity(saveIntent);
+        });
 
         // 닫기 버튼 설정
         close = findViewById(R.id.back);
         close.setOnClickListener(v -> finish());
+
+
 
         listView = findViewById(R.id.setList); // 리스트뷰
         List<String> setList = new ArrayList<>(); // 세트 리스트

@@ -44,6 +44,7 @@ public class addDrug extends AppCompatActivity { //약물 추가 액티비티
     Handler handler;    //핸들러
     Runnable runnable;  //실행 가능한 클래스
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {    //액티비티 시작시
         super.onCreate(savedInstanceState);
@@ -63,7 +64,7 @@ public class addDrug extends AppCompatActivity { //약물 추가 액티비티
         drugName = findViewById(R.id.drugName); //약물 이름
         handler = new Handler();    //핸들러
 
-        drugName.setOnEditorActionListener((v, actionId, event) -> {
+        drugName.setOnEditorActionListener((v, actionId, event) -> {   //약물 이름 입력 후 엔터키 누르면
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_NEXT) {
                 Intent intent = new Intent(v.getContext(), SaveDrug.class); //저장된 약물 액티비티로 이동
                 intent.putExtra("drugName", drugName.getText().toString()); //약물 이름 전달
@@ -73,7 +74,7 @@ public class addDrug extends AppCompatActivity { //약물 추가 액티비티
             return false;
         });
 
-        drugName.addTextChangedListener(new TextWatcher() {
+        drugName.addTextChangedListener(new TextWatcher() {   //약물 이름 텍스트 변경시
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // 텍스트 변경 전
@@ -95,7 +96,7 @@ public class addDrug extends AppCompatActivity { //약물 추가 액티비티
                         }
                     }).start();
                 };
-                handler.postDelayed(runnable, 1000);   //1초 뒤 실행
+                handler.postDelayed(runnable, 2000);   //2초 뒤 실행
             }
 
             @Override
@@ -104,13 +105,13 @@ public class addDrug extends AppCompatActivity { //약물 추가 액티비티
             }
         });
 
-//        clear = findViewById(R.id.clear);   //지우기 버튼
-//        clear.setOnClickListener(v -> {  //지우기 버튼 클릭시
-//            drugName.setText("");
-//            if (runnable != null) {
-//                handler.removeCallbacks(runnable);
-//            }
-//        });
+        clear = findViewById(R.id.clear);   //지우기 버튼
+        clear.setOnClickListener(v -> {  //지우기 버튼 클릭시
+            drugName.setText("");
+            if (runnable != null) {
+                handler.removeCallbacks(runnable);
+            }
+        });
 
         recyclerView.addItemDecoration(new DividerItemDecoration(this));    //리사이클러뷰 아이템 구분선 추가
     }
