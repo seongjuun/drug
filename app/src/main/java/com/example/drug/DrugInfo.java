@@ -30,11 +30,11 @@ public class DrugInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_drug_info);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> { // 상태바 높이만큼 패딩 설정
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars()); // 시스템 바
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom); // 패딩 설정
+            return insets;  // 반환
+        }); // 상태바 높이만큼 패딩 설정
         drugNameTextView = findViewById(R.id.DrugInfoTitle);
         String drugName = getIntent().getStringExtra("drugName");
         drugNameTextView.setText(drugName);

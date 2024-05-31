@@ -18,6 +18,9 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,6 +53,11 @@ public class addDrug extends AppCompatActivity { //약물 추가 액티비티
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_drug);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> { // 상태바 높이만큼 패딩 설정
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars()); // 시스템 바
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom); // 패딩 설정
+            return insets;  // 반환
+        }); // 상태바 높이만큼 패딩 설정
         ImageView close = findViewById(R.id.back);
         close.setOnClickListener(v -> finish());
 
