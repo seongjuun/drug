@@ -8,6 +8,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,7 +29,7 @@ public class drug extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    SQLiteHelper sqLiteHelper;
     public drug() {
         // Required empty public constructor
     }
@@ -70,6 +75,15 @@ public class drug extends Fragment {
             }
         });
 
+        sqLiteHelper = new SQLiteHelper(getActivity());
+        ArrayList<String> drugName = sqLiteHelper.getDrugNames();
+        System.out.println(drugName);
+
+        RecyclerView drugListRecyclerView = view.findViewById(R.id.drug_list);
+        drugListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        DrugListAdapter adapter = new DrugListAdapter(drugName);
+        drugListRecyclerView.setAdapter(adapter);
         return view;
     }
 }

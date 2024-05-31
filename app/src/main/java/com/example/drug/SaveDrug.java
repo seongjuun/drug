@@ -22,6 +22,7 @@ public class SaveDrug extends AppCompatActivity {
     private TextView drugNameTextView;  // 약물 이름 텍스트뷰
     private ImageView close; // 닫기 버튼
     ListView listView;  // 리스트뷰
+    SQLiteHelper sqLiteHelper;  // SQLiteHelper
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +47,8 @@ public class SaveDrug extends AppCompatActivity {
         }
         Button save = findViewById(R.id.saveButton); // 저장 버튼
         save.setOnClickListener(v -> {
+            sqLiteHelper = new SQLiteHelper(this);
+            sqLiteHelper.insertDrug(drugNameTextView.getText().toString());
             Intent saveIntent = new Intent(this, MainActivity.class);
             finishActivity(0);
             startActivity(saveIntent);

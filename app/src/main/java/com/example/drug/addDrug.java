@@ -89,7 +89,7 @@ public class addDrug extends AppCompatActivity { //약물 추가 액티비티
                 runnable = () -> {
                     new Thread(() -> {  //스레드
                         try {
-                            drugItems = ApiClient.ApiExplorer(drugName.getText().toString());   //오픈 api 호출
+                            drugItems = ApiClient.drugNameApi(drugName.getText().toString());   //오픈 api 호출
                             runOnUiThread(() -> xmlParsing(drugItems));   //xml 파싱
                         } catch (IOException e) {
                             throw new RuntimeException(e);
