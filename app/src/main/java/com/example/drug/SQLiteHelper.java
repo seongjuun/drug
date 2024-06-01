@@ -26,9 +26,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         // DB 업그레이드 로직
     }
 
-    public ArrayList<String> getDateDrugNames() {
+    public ArrayList<String> getDateDrugNames(String date) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT name FROM Drug", null);
+        Cursor cursor = db.rawQuery("SELECT name FROM Drug WHERE date <= ?", new String[]{date});
         ArrayList<String> result = new ArrayList<>();
         while (cursor.moveToNext()) {
             result.add(cursor.getString(0));

@@ -23,7 +23,6 @@ public class WeekFragment extends Fragment {
     private int position;
     private TextView selectedDateTextView;
     private TextView[] dateTextViews;
-    private TextView[] dateWeek;
     public static WeekFragment newInstance(int position, TextView selectedDateTextView) {
         WeekFragment fragment = new WeekFragment();
         Bundle args = new Bundle();
@@ -95,7 +94,8 @@ public class WeekFragment extends Fragment {
 
             final int index = i;
             dateTextViews[i].setOnClickListener(v -> { // 날짜 클릭 시
-                selectedDateTextView.setText(new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault()).format(date.getTime()));   // 선택된 날짜로 TextView 업데이트
+                selectedDateTextView.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date.getTime()));   // 선택된 날짜로 TextView 업데이트
+                home.Refresh(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date.getTime()));
                 for (TextView tv : dateTextViews) { // 선택된 날짜 배경색 변경
                     if(tv.getId() == dateTextViews[index].getId() && isSameDay(date, today)) {    // 오늘 날짜인 경우
                         tv.setBackgroundColor(Color.GREEN);

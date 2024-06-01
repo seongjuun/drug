@@ -1,5 +1,6 @@
 package com.example.drug;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,8 +31,9 @@ public class home extends Fragment {
     private ViewPager2 viewPager;
     private ViewPagerAdapter adapter;
     private TextView selectedDateTextView;
-    private SQLiteHelper sqLiteHelper;
-
+    private static SQLiteHelper sqLiteHelper;
+    static RecyclerView drugListRecyclerView;
+    static ArrayList<String> drugName;
     public home() {
         // Required empty public constructor
     }
@@ -70,13 +72,11 @@ public class home extends Fragment {
         viewPager = view.findViewById(R.id.viewPager); // 'view' 객체를 통해 findViewById 호출
         selectedDateTextView = view.findViewById(R.id.selectedDateTextView); // 'view' 객체를 통해 findViewById 호출
         Calendar today = Calendar.getInstance(); // 오늘 날짜
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String todayString = dateFormat.format(today.getTime());
         selectedDateTextView.setText(todayString); // 현재 날짜로 TextView 업데이트
         adapter = new ViewPagerAdapter(this, selectedDateTextView);
         viewPager.setAdapter(adapter);
-
-
 
 
         // 오늘 날짜가 포함된 페이지로 이동
@@ -84,14 +84,20 @@ public class home extends Fragment {
         viewPager.setCurrentItem(todayPosition, false);
 
         sqLiteHelper = new SQLiteHelper(getActivity());
-        ArrayList<String> drugName = sqLiteHelper.getDateDrugNames();
-        System.out.println(drugName);
+        drugName = sqLiteHelper.getDateDrugNames(todayString);
 
-        RecyclerView drugListRecyclerView = view.findViewById(R.id.homeRecyclerView);
+        drugListRecyclerView = view.findViewById(R.id.homeRecyclerView);
         drugListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         DrugListAdapter adapter = new DrugListAdapter(drugName);
         drugListRecyclerView.setAdapter(adapter);
         return view;
+    }
+    @SuppressLint("NotifyDataSetChanged")
+    public static void Refresh(String date){
+        drugName = sqLiteHelper.getDateDrugNames(date);
+        DrugListAdapter adapter = new DrugListAdapter(drugName);
+        drugListRecyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged(); //어댑터 갱신
     }
 }
