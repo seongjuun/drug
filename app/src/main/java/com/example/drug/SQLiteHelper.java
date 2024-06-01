@@ -18,7 +18,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE Drug (name TEXT PRIMARY KEY);");
+        sqLiteDatabase.execSQL("CREATE TABLE Drug (name TEXT PRIMARY KEY, date DATE);");
     }
 
     @Override
@@ -26,6 +26,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         // DB 업그레이드 로직
     }
 
+    public ArrayList<String> getDateDrugNames() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT name FROM Drug", null);
+        ArrayList<String> result = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            result.add(cursor.getString(0));
+        }
+        cursor.close();
+        return result;
+    }
     public ArrayList<String> getDrugNames() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT name FROM Drug", null);
@@ -36,8 +46,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         cursor.close();
         return result;
     }
-    public void insertDrug(String name) {
+    public void insertDrug(String name, String date) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("INSERT INTO Drug (name) VALUES('" + name + "');");
+        db.execSQL("INSERT INTO Drug (name, date) VALUES('" + name + "', '" + date + "');");
     }
 }

@@ -14,8 +14,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class SaveDrug extends AppCompatActivity {
 
@@ -47,8 +50,12 @@ public class SaveDrug extends AppCompatActivity {
         }
         Button save = findViewById(R.id.saveButton); // 저장 버튼
         save.setOnClickListener(v -> {
+            Calendar today = Calendar.getInstance(); // 오늘 날짜
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            String todayString = dateFormat.format(today.getTime());
+            System.out.println(todayString);
             sqLiteHelper = new SQLiteHelper(this);
-            sqLiteHelper.insertDrug(drugNameTextView.getText().toString());
+            sqLiteHelper.insertDrug(drugNameTextView.getText().toString(), todayString);
             Intent saveIntent = new Intent(this, MainActivity.class);
             finishActivity(0);
             startActivity(saveIntent);
