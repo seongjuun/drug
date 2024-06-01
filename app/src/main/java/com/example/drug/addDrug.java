@@ -59,7 +59,7 @@ public class addDrug extends AppCompatActivity { //약물 추가 액티비티
             return insets;  // 반환
         }); // 상태바 높이만큼 패딩 설정
         ImageView close = findViewById(R.id.back);
-        close.setOnClickListener(v -> finish());
+        close.setOnClickListener(v -> finish());  //닫기 버튼 클릭시 액티비티 종료
 
 
         recyclerView = findViewById(R.id.recyclerView); //리사이클러뷰
@@ -76,7 +76,7 @@ public class addDrug extends AppCompatActivity { //약물 추가 액티비티
             if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_GO || actionId == EditorInfo.IME_ACTION_NEXT) {
                 Intent intent = new Intent(v.getContext(), SaveDrug.class); //저장된 약물 액티비티로 이동
                 intent.putExtra("drugName", drugName.getText().toString()); //약물 이름 전달
-                v.getContext().startActivity(intent);
+                v.getContext().startActivity(intent);   //액티비티 시작
                 return true;
             }
             return false;
@@ -92,7 +92,7 @@ public class addDrug extends AppCompatActivity { //약물 추가 액티비티
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // 텍스트 변경 중
                 if (runnable != null) {
-                    handler.removeCallbacks(runnable);
+                    handler.removeCallbacks(runnable);  //핸들러 콜백 제거
                 }
                 runnable = () -> {
                     new Thread(() -> {  //스레드
@@ -100,7 +100,7 @@ public class addDrug extends AppCompatActivity { //약물 추가 액티비티
                             drugItems = ApiClient.drugNameApi(drugName.getText().toString());   //오픈 api 호출
                             runOnUiThread(() -> xmlParsing(drugItems));   //xml 파싱
                         } catch (IOException e) {
-                            throw new RuntimeException(e);
+                            throw new RuntimeException(e);  //예외 처리
                         }
                     }).start();
                 };
@@ -158,25 +158,25 @@ class DividerItemDecoration extends RecyclerView.ItemDecoration {   //리사이�
     private final Drawable divider;
 
     public DividerItemDecoration(Context context) {
-        divider = ContextCompat.getDrawable(context, R.drawable.divider);
+        divider = ContextCompat.getDrawable(context, R.drawable.divider);   //구분선 이미지
     }
 
     @Override
-    public void onDrawOver(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+    public void onDrawOver(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {    //구분선 그리기
         int left = parent.getPaddingLeft();
         int right = parent.getWidth() - parent.getPaddingRight();
 
-        int childCount = parent.getChildCount();
-        for (int i = 0; i < childCount - 1; i++) {
-            View child = parent.getChildAt(i);
+        int childCount = parent.getChildCount();    //리사이클러뷰 자식 뷰 개수
+        for (int i = 0; i < childCount - 1; i++) {  //자식 뷰 개수만큼 반복
+            View child = parent.getChildAt(i);  //자식 뷰
 
-            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams(); //리사이클러뷰 레이아웃 설정
 
-            int top = child.getBottom() + params.bottomMargin;
-            int bottom = top + divider.getIntrinsicHeight();
+            int top = child.getBottom() + params.bottomMargin;  //위
+            int bottom = top + divider.getIntrinsicHeight();    //아래
 
-            divider.setBounds(left, top, right, bottom);
-            divider.draw(c);
+            divider.setBounds(left, top, right, bottom);    //구분선 위치 설정
+            divider.draw(c);    //구분선 그리기
         }
     }
 }

@@ -7,32 +7,32 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-class ApiClient {
+class ApiClient { // API 요청 클래스
 
-    private static String ApiExplorer(String urlBuilder) throws IOException {
-        /*URL*/
-        URL url = new URL(urlBuilder);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-        System.out.println("Response code: " + conn.getResponseCode());
-        BufferedReader rd;
-        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+    private static String ApiExplorer(String urlBuilder) throws IOException {    // API 요청 메소드
+
+        URL url = new URL(urlBuilder);  // URL 객체 생성
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();  // URL 연결
+        conn.setRequestMethod("GET");   // GET 방식으로 요청
+        conn.setRequestProperty("Content-type", "application/json");    // 요청 헤더 설정
+        System.out.println("Response code: " + conn.getResponseCode());  // 응답 코드 출력
+        BufferedReader rd;  // 버퍼 리더 객체 생성
+        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {   // 응답 코드가 200 ~ 300 사이일 때
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));  // 버퍼 리더 객체 생성
         } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));  // 에러 스트림으로 버퍼 리더 객체 생성
         }
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder(); // 문자열 객체 생성
         String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
+        while ((line = rd.readLine()) != null) {    // 읽어온 데이터가 null이 아닐 때까지
+            sb.append(line);    // 문자열에 추가
         }
-        rd.close();
-        conn.disconnect();
-        System.out.println(sb);
+        rd.close(); // 버퍼 리더 닫기
+        conn.disconnect();  // 연결 종료
+        System.out.println(sb); // 응답 데이터 출력
         return sb.toString(); // 반환할 문자열
     }
-    public static String drugNameApi(String drugName) throws IOException {
+    public static String drugNameApi(String drugName) throws IOException {  // 약품명 검색 URL
         String urlBuilder = "http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList" + "?" + URLEncoder.encode("serviceKey", "UTF-8") +
                 "=PfD2%2BbYHcC9WsY%2BH5xYpt9Tj39TG%2B3AVSkpfdygTUCxTNEj3mpWXeG5hEa4p7uSwN10Xdy%2BFZIBlvsdKtjTxAQ%3D%3D" + /*Service Key*/
                 "&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8") + /*페이지번호*/
@@ -41,7 +41,7 @@ class ApiClient {
                 "&" + URLEncoder.encode("type", "UTF-8") + "=" + URLEncoder.encode("xml", "UTF-8"); /*응답데이터 형식(xml/json) Default:xml*/
         return ApiExplorer(urlBuilder);
     }
-    public static String drugInfoApi(String drugName) throws IOException {
+    public static String drugInfoApi(String drugName) throws IOException {  // 약품 정보 검색 URL
         String urlBuilder = "http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList" + "?" + URLEncoder.encode("serviceKey", "UTF-8") +
                 "=PfD2%2BbYHcC9WsY%2BH5xYpt9Tj39TG%2B3AVSkpfdygTUCxTNEj3mpWXeG5hEa4p7uSwN10Xdy%2BFZIBlvsdKtjTxAQ%3D%3D" + /*Service Key*/
                 "&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8") + /*페이지번호*/

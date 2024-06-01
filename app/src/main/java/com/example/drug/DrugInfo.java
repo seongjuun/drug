@@ -19,7 +19,7 @@ import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-public class DrugInfo extends AppCompatActivity {
+public class DrugInfo extends AppCompatActivity { // 약물 정보 액티비티
 
     TextView drugNameTextView;  // 약물 이름 텍스트뷰
     ImageView back; // 닫기 버튼
@@ -58,7 +58,7 @@ public class DrugInfo extends AppCompatActivity {
             }
         }).start();
     }
-    protected void xmlParsing(String drugItems) {
+    protected void xmlParsing(String drugItems) { // xml 파싱
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance(); //문서 빌더 팩토리
             DocumentBuilder builder = factory.newDocumentBuilder(); //문서 빌더

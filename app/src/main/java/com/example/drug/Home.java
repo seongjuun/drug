@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class home extends Fragment {
+public class Home extends Fragment { // 홈 화면 Fragment
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -27,19 +27,18 @@ public class home extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    Button add_drug;
-    private ViewPager2 viewPager;
-    private ViewPagerAdapter adapter;
-    private TextView selectedDateTextView;
-    private static SQLiteHelper sqLiteHelper;
-    static RecyclerView drugListRecyclerView;
-    static ArrayList<String> drugName;
-    public home() {
-        // Required empty public constructor
+    Button add_drug; // 약 추가 버튼
+    private ViewPager2 viewPager;   // ViewPager2 객체
+    private ViewPagerAdapter adapter;   // ViewPagerAdapter 객체
+    private TextView selectedDateTextView;  // 선택된 날짜를 표시하는 TextView
+    private static SQLiteHelper sqLiteHelper;       // SQLiteHelper 객체
+    static RecyclerView drugListRecyclerView;   // RecyclerView 객체
+    static ArrayList<String> drugName;  // 약 이름을 저장하는 ArrayList
+    public Home() {
     }
 
-    public static home newInstance(String param1, String param2) {
-        home fragment = new home();
+    public static Home newInstance(String param1, String param2) { // home 객체 생성
+        Home fragment = new Home();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -48,7 +47,7 @@ public class home extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) { // Fragment 생성
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -58,7 +57,7 @@ public class home extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState) { // Fragment 뷰 생성
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         add_drug = view.findViewById(R.id.add_drug);
@@ -79,25 +78,24 @@ public class home extends Fragment {
         viewPager.setAdapter(adapter);
 
 
-        // 오늘 날짜가 포함된 페이지로 이동
-        int todayPosition = Integer.MAX_VALUE / 2;
-        viewPager.setCurrentItem(todayPosition, false);
+        int todayPosition = Integer.MAX_VALUE / 2; // 오늘 날짜가 포함된 페이지
+        viewPager.setCurrentItem(todayPosition, false); // 오늘 날짜로 ViewPager2 업데이트
 
-        sqLiteHelper = new SQLiteHelper(getActivity());
-        drugName = sqLiteHelper.getDateDrugNames(todayString);
+        sqLiteHelper = new SQLiteHelper(getActivity()); // SQLiteHelper 객체 생성
+        drugName = sqLiteHelper.getDateDrugNames(todayString);  // 오늘 날짜의 약 이름을 가져옴
 
-        drugListRecyclerView = view.findViewById(R.id.homeRecyclerView);
-        drugListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        drugListRecyclerView = view.findViewById(R.id.homeRecyclerView);    // 'view' 객체를 통해 findViewById 호출
+        drugListRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));  // RecyclerView의 레이아웃 매니저 설정
 
-        DrugListAdapter adapter = new DrugListAdapter(drugName);
-        drugListRecyclerView.setAdapter(adapter);
+        DrugListAdapter adapter = new DrugListAdapter(drugName);    // DrugListAdapter 객체 생성
+        drugListRecyclerView.setAdapter(adapter);   // RecyclerView에 어댑터 설정
         return view;
     }
     @SuppressLint("NotifyDataSetChanged")
-    public static void Refresh(String date){
-        drugName = sqLiteHelper.getDateDrugNames(date);
-        DrugListAdapter adapter = new DrugListAdapter(drugName);
-        drugListRecyclerView.setAdapter(adapter);
+    public static void Refresh(String date){    // 날짜에 따라 RecyclerView 갱신
+        drugName = sqLiteHelper.getDateDrugNames(date); // 날짜에 따른 약 이름을 가져옴
+        DrugListAdapter adapter = new DrugListAdapter(drugName);    // DrugListAdapter 객체 생성
+        drugListRecyclerView.setAdapter(adapter);   // RecyclerView에 어댑터 설정
         adapter.notifyDataSetChanged(); //어댑터 갱신
     }
 }

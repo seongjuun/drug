@@ -20,14 +20,14 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class SaveDrug extends AppCompatActivity {
+public class SaveDrug extends AppCompatActivity { // 약물 저장 액티비티
 
     private TextView drugNameTextView;  // 약물 이름 텍스트뷰
     private ImageView close; // 닫기 버튼
     ListView listView;  // 리스트뷰
     SQLiteHelper sqLiteHelper;  // SQLiteHelper
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {    // 액티비티 생성
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_save_drug);
@@ -55,8 +55,8 @@ public class SaveDrug extends AppCompatActivity {
             String todayString = dateFormat.format(today.getTime());
             System.out.println(todayString);
             sqLiteHelper = new SQLiteHelper(this);
-            sqLiteHelper.insertDrug(drugNameTextView.getText().toString(), todayString);
-            Intent saveIntent = new Intent(this, MainActivity.class);
+            sqLiteHelper.insertDrug(drugNameTextView.getText().toString(), todayString);    // DB에 약물 저장
+            Intent saveIntent = new Intent(this, MainActivity.class);   // 메인 액티비티로 이동
             finishActivity(0);
             startActivity(saveIntent);
         });
@@ -76,8 +76,8 @@ public class SaveDrug extends AppCompatActivity {
         setList.add("약물 사진을 변경하시겠습까?");
         setList.add("알림 시간을 설정하시겠습니까?");
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, setList);
-        listView.setAdapter(adapter);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, setList);    // 어댑터 생성
+        listView.setAdapter(adapter);   // 리스트뷰에 어댑터 설정
 
     }
 }
