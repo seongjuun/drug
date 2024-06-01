@@ -62,7 +62,7 @@ public class addDrug extends AppCompatActivity { //약물 추가 액티비티
         close.setOnClickListener(v -> finish());  //닫기 버튼 클릭시 액티비티 종료
 
 
-        recyclerView = findViewById(R.id.recyclerView); //리사이클러뷰
+        recyclerView = findViewById(R.id.addDrugListRecyclerView); //리사이클러뷰
         recyclerView.setLayoutManager(new LinearLayoutManager(this));   //리사이클러뷰 레이아웃 설정
 
         drugList = new ArrayList<>();   //약물 리스트
