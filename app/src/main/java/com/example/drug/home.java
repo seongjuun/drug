@@ -84,7 +84,7 @@ public class home extends Fragment {
         viewPager.setCurrentItem(todayPosition, false);
 
         sqLiteHelper = new SQLiteHelper(getActivity());
-        ArrayList<String> drugName = sqLiteHelper.getDrugNames();
+        ArrayList<String> drugName = sqLiteHelper.getDateDrugNames();
         System.out.println(drugName);
 
         RecyclerView drugListRecyclerView = view.findViewById(R.id.homeRecyclerView);
