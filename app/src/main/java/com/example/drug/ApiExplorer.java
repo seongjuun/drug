@@ -33,7 +33,7 @@ class ApiClient { // API 요청 클래스
         return sb.toString(); // 반환할 문자열
     }
     public static String drugNameApi(String drugName) throws IOException {  // 약품명 검색 URL
-        String urlBuilder = "http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList" + "?" + URLEncoder.encode("serviceKey", "UTF-8") +
+        String urlBuilder = "https://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList" + "?" + URLEncoder.encode("serviceKey", "UTF-8") +
                 "=PfD2%2BbYHcC9WsY%2BH5xYpt9Tj39TG%2B3AVSkpfdygTUCxTNEj3mpWXeG5hEa4p7uSwN10Xdy%2BFZIBlvsdKtjTxAQ%3D%3D" + /*Service Key*/
                 "&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8") + /*페이지번호*/
                 "&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("50", "UTF-8") + /*한 페이지 결과 수*/
@@ -42,7 +42,7 @@ class ApiClient { // API 요청 클래스
         return ApiExplorer(urlBuilder);
     }
     public static String drugInfoApi(String drugName) throws IOException {  // 약품 정보 검색 URL
-        String urlBuilder = "http://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList" + "?" + URLEncoder.encode("serviceKey", "UTF-8") +
+        String urlBuilder = "https://apis.data.go.kr/1471000/DrbEasyDrugInfoService/getDrbEasyDrugList" + "?" + URLEncoder.encode("serviceKey", "UTF-8") +
                 "=PfD2%2BbYHcC9WsY%2BH5xYpt9Tj39TG%2B3AVSkpfdygTUCxTNEj3mpWXeG5hEa4p7uSwN10Xdy%2BFZIBlvsdKtjTxAQ%3D%3D" + /*Service Key*/
                 "&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8") + /*페이지번호*/
                 "&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8") + /*한 페이지 결과 수*/
